@@ -2,485 +2,446 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shackled to the Wyrm - Dark Fantasy RPG</title>
+    <title>Shackled to the Wyrm - Complete Dark Fantasy RPG</title>
     <style>
-        * {
-            box-sizing: border-box;
-            user-select: none;
-        }
-
+        * { box-sizing: border-box; user-select: none; }
         body {
-            background: linear-gradient(135deg, #0a0f1e 0%, #0c1222 100%);
-            font-family: 'Courier New', 'Monaco', monospace;
-            color: #d4d4dc;
-            margin: 0;
+            background: #0a0a12;
+            font-family: 'Courier New', monospace;
+            color: #ddd;
             padding: 20px;
-            min-height: 100vh;
+            margin: 0;
         }
-
         .game-container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 280px 1fr 300px;
-            gap: 16px;
+            grid-template-columns: 300px 1fr 320px;
+            gap: 15px;
         }
-
-        /* Panels */
         .panel {
-            background: rgba(10, 14, 23, 0.85);
-            backdrop-filter: blur(4px);
-            border: 1px solid #2a2e4a;
+            background: rgba(15, 18, 30, 0.9);
+            border: 1px solid #4a3e6e;
             border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            padding: 15px;
+            backdrop-filter: blur(3px);
         }
-
-        .stat-panel {
-            grid-column: 1;
-        }
-
-        .combat-panel {
-            grid-column: 2;
-        }
-
-        .world-panel {
-            grid-column: 3;
-        }
-
-        /* Stats */
         .stat-row {
             display: flex;
             justify-content: space-between;
-            margin: 8px 0;
-            font-size: 14px;
+            margin: 6px 0;
+            font-size: 13px;
             border-bottom: 1px solid #2a2e4a;
-            padding: 4px 0;
+            padding: 3px 0;
         }
-
-        .stat-name {
-            color: #a8b2d1;
-        }
-
-        .stat-value {
-            font-weight: bold;
-            color: #e6c87b;
-        }
-
-        .health-bar, .sanity-bar {
+        .health-bar, .sanity-bar, .end-bar {
             background: #2a1e2e;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             margin: 8px 0;
-        }
-
-        .health-fill {
-            background: #c44;
             height: 12px;
-            width: 0%;
-            transition: width 0.2s;
         }
-
-        .sanity-fill {
-            background: #6a4e9b;
-            height: 12px;
-            width: 0%;
-        }
-
+        .health-fill { background: #c44; width: 0%; height: 100%; transition: width 0.2s; }
+        .sanity-fill { background: #9b6acf; width: 0%; height: 100%; }
+        .end-fill { background: #4a9eff; width: 0%; height: 100%; }
         button {
             background: #1e243b;
-            border: 1px solid #4a5070;
-            color: #e6c87b;
+            border: 1px solid #6a5a8e;
+            color: #e6d5a8;
             font-family: monospace;
-            font-size: 13px;
-            padding: 6px 12px;
+            padding: 5px 10px;
             margin: 4px;
             cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.1s;
+            border-radius: 5px;
+            font-size: 12px;
         }
-
-        button:hover {
-            background: #2e3552;
-            border-color: #c4a44a;
-        }
-
+        button:hover { background: #2e3552; border-color: #c4a44a; }
         .combat-log {
             background: #05070e;
             border-radius: 8px;
-            height: 300px;
+            height: 280px;
             overflow-y: auto;
             padding: 10px;
-            font-size: 13px;
-            margin: 12px 0;
-            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
         }
-
-        .combat-log p {
-            margin: 4px 0;
-            border-left: 2px solid #4a5070;
-            padding-left: 8px;
-        }
-
-        .action-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 12px 0;
-        }
-
         .enemy-card {
             background: #1a1e30;
             border-radius: 8px;
             padding: 12px;
-            margin: 12px 0;
+            margin: 10px 0;
             text-align: center;
-            border: 1px solid #4a3e6e;
+            border: 1px solid #6a5a8e;
         }
-
-        .zone-badge {
-            background: #2a1e3a;
-            padding: 6px;
-            border-radius: 6px;
-            text-align: center;
-            margin: 8px 0;
-        }
-
-        .skill-list {
-            max-height: 200px;
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            max-height: 250px;
             overflow-y: auto;
-            font-size: 12px;
+            font-size: 11px;
         }
-
-        hr {
-            border-color: #2a2e4a;
-            margin: 12px 0;
+        .faction-badge {
+            background: #2a1e3a;
+            padding: 5px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 5px 0;
         }
-
-        h3, h4 {
-            margin: 8px 0;
-            color: #e6c87b;
-        }
+        hr { border-color: #4a3e6e; margin: 10px 0; }
+        h3, h4 { margin: 8px 0; color: #e6d5a8; }
     </style>
 </head>
 <body>
 <div class="game-container">
-    <!-- LEFT PANEL: Stats -->
-    <div class="panel stat-panel">
-        <h3>⚔️ THE WYRM'S SHACKLE</h3>
-        <div class="stat-row"><span class="stat-name">Level</span><span class="stat-value" id="stat-level">1</span></div>
-        <div class="stat-row"><span class="stat-name">XP</span><span class="stat-value" id="stat-xp">0/100</span></div>
-        <div class="stat-row"><span class="stat-name">Class</span><span class="stat-value" id="stat-class">Knight</span></div>
-        <div class="health-bar"><div class="health-fill" id="health-fill"></div></div>
-        <div class="stat-row"><span class="stat-name">❤️ HP</span><span class="stat-value" id="stat-hp">0/0</span></div>
-        <div class="sanity-bar"><div class="sanity-fill" id="sanity-fill"></div></div>
-        <div class="stat-row"><span class="stat-name">🧠 Sanity</span><span class="stat-value" id="stat-sanity">0/0</span></div>
-        <div class="stat-row"><span class="stat-name">⚡ Endurance</span><span class="stat-value" id="stat-end">0/0</span></div>
+    <!-- LEFT: Stats -->
+    <div class="panel">
+        <h3>⛓️ SHACKLED TO THE WYRM</h3>
+        <div class="stat-row"><span>Level</span><span id="lvl">1</span> <span id="xp">0/100</span></div>
+        <div class="stat-row"><span>Class</span><span id="className">Knight</span></div>
+        <div class="health-bar"><div class="health-fill" id="hpFill"></div></div>
+        <div class="stat-row"><span>❤️ HP</span><span id="hpVal">0/0</span></div>
+        <div class="sanity-bar"><div class="sanity-fill" id="sanFill"></div></div>
+        <div class="stat-row"><span>🧠 Sanity</span><span id="sanVal">0/0</span></div>
+        <div class="end-bar"><div class="end-fill" id="endFill"></div></div>
+        <div class="stat-row"><span>⚡ Endurance</span><span id="endVal">0/0</span></div>
         <hr>
-        <div class="stat-row"><span class="stat-name">💪 STR</span><span class="stat-value" id="stat-str">0</span></div>
-        <div class="stat-row"><span class="stat-name">🧠 INT</span><span class="stat-value" id="stat-int">0</span></div>
-        <div class="stat-row"><span class="stat-name">❤️ VIT</span><span class="stat-value" id="stat-vit">0</span></div>
-        <div class="stat-row"><span class="stat-name">🛡️ DEF</span><span class="stat-value" id="stat-def">0</span></div>
-        <div class="stat-row"><span class="stat-name">🔮 WIS</span><span class="stat-value" id="stat-wis">0</span></div>
-        <div class="stat-row"><span class="stat-name">🍀 LUCK</span><span class="stat-value" id="stat-luck">0</span></div>
-        <div class="stat-row"><span class="stat-name">🏋️ END (stat)</span><span class="stat-value" id="stat-endstat">0</span></div>
-        <div class="stat-row"><span class="stat-name">⚖️ Weight</span><span class="stat-value" id="stat-weight">0/0</span></div>
+        <div class="stat-row"><span>💪 STR</span><span id="str">10</span> <span>🧠 INT</span><span id="int">10</span></div>
+        <div class="stat-row"><span>❤️ VIT</span><span id="vit">10</span> <span>🛡️ DEF</span><span id="def">5</span></div>
+        <div class="stat-row"><span>🔮 WIS</span><span id="wis">8</span> <span>🍀 LUCK</span><span id="luck">8</span></div>
+        <div class="stat-row"><span>🏋️ ENDstat</span><span id="endStat">10</span> <span>⚖️ Weight</span><span id="weight">0/0</span></div>
         <hr>
-        <div class="stat-row"><span class="stat-name">🌞 Day/Night</span><span class="stat-value" id="daynight">Day</span></div>
-        <div class="stat-row"><span class="stat-name">📍 Zone</span><span class="stat-value" id="zone-name">Cursed Gaol</span></div>
-        <button id="travel-btn">🗺️ Travel (World Map)</button>
-        <button id="rest-btn">🛌 Rest (Inn/Camp)</button>
-        <button id="craft-btn">⚒️ Craft</button>
-        <button id="save-btn">💾 Save Game</button>
+        <div class="stat-row"><span>🌙 Day/Night</span><span id="time">Day</span></div>
+        <div class="stat-row"><span>📍 Zone</span><span id="zone">Cursed Gaol</span></div>
+        <div class="faction-badge">🤝 Cult: <span id="cultRep">0</span> | Resistance: <span id="resRep">0</span> | Order: <span id="ordRep">0</span></div>
+        <button id="travelBtn">🗺️ Travel</button>
+        <button id="restBtn">🛌 Rest</button>
+        <button id="craftBtn">⚒️ Craft</button>
+        <button id="saveBtn">💾 Save</button>
+        <button id="classChangeBtn">🔄 Change Class</button>
     </div>
 
-    <!-- MIDDLE PANEL: Combat & Actions -->
-    <div class="panel combat-panel">
+    <!-- MIDDLE: Combat -->
+    <div class="panel">
         <h3>⚔️ COMBAT</h3>
-        <div id="enemy-area">
+        <div id="enemyDiv">
             <div class="enemy-card">
-                <div>No enemy present</div>
-                <button id="explore-btn">🌲 Explore / Search for Foes</button>
+                <div>No enemy</div>
+                <button id="exploreBtn">🌲 Explore</button>
             </div>
         </div>
-        <div class="combat-log" id="combat-log">
-            <p>Welcome, shackled one. Escape the cult.</p>
-            <p>Type 'attack' or use abilities below.</p>
+        <div class="combat-log" id="log">
+            <p>You wake in a prison cell, a shiv in hand. Escape the cult.</p>
         </div>
-        <div class="action-buttons" id="action-buttons">
-            <button id="attack-btn">⚔️ Attack</button>
-            <button id="ability-btn">🔮 Abilities</button>
-            <button id="item-btn">🧪 Use Item</button>
-            <button id="flee-btn">🏃 Flee</button>
+        <div id="actionDiv">
+            <button id="attackBtn">⚔️ Attack</button>
+            <button id="abilitiesBtn">🔮 Abilities</button>
+            <button id="itemBtn">🧪 Use Item</button>
+            <button id="fleeBtn">🏃 Flee</button>
         </div>
-        <div id="ability-list" style="display:none;" class="skill-list"></div>
-        <div id="item-list" style="display:none;" class="skill-list"></div>
+        <div id="abilityPanel" style="display:none;" class="skill-grid"></div>
     </div>
 
-    <!-- RIGHT PANEL: World & Inventory -->
-    <div class="panel world-panel">
-        <h3>🎒 Inventory</h3>
-        <div id="inventory-list" style="font-size:12px; max-height:150px; overflow-y:auto;"></div>
+    <!-- RIGHT: Inventory & Skills -->
+    <div class="panel">
+        <h3>🎒 Inventory (<span id="curWeight">0</span>/<span id="maxWeight">0</span>)</h3>
+        <div id="invList" style="font-size:11px; max-height:120px; overflow-y:auto;"></div>
         <hr>
-        <h4>📜 Known Abilities</h4>
-        <div id="known-abilities" class="skill-list"></div>
+        <h4>📜 Mastered Skills (<span id="skillCount">0</span>/12)</h4>
+        <div id="skillList" style="font-size:11px; max-height:150px; overflow-y:auto;"></div>
         <hr>
         <h4>🗺️ Zones</h4>
-        <div id="zone-list"></div>
-        <button id="class-change-btn" style="margin-top:12px;">🔄 Change Class (25/50/75/100)</button>
+        <div id="zoneList" style="font-size:11px;"></div>
     </div>
 </div>
 
 <script>
-    // ------------------- GAME STATE -------------------
+    // ======================== COMPLETE GAME STATE ========================
     let game = {
-        level: 1,
-        xp: 0,
-        xpToNext: 100,
-        className: "Knight",
-        classPassives: { Knight:0, Shadow:0, Seer:0 },
-        stats: { str:10, int:10, vit:10, def:5, wis:8, luck:8, end:10 },
-        hp: 100, maxHp: 100,
-        sanity: 60, maxSanity: 60,
-        endurance: 50, maxEndurance: 50,
-        inventory: [{name:"Shiv", type:"weapon", weight:2, value:5, desc:"Poor blade"}],
-        weightLimit: 40,
-        zone: "Cursed Gaol",
-        dayNight: "Day", turnCounter:0,
-        abilitiesUnlocked: [],
-        currentEnemy: null,
-        inCombat: false,
-        lastCheckpoint: "Cursed Gaol",
-        // crafting recipes
-        recipes: [
-            { ing1:"Herb", ing2:"Water", result:"Weak Healing Potion", effect:"heal 20hp" }
-        ]
+        level:1, xp:0, xpNeeded:100,
+        className:"Knight",
+        classMilestones:[], // levels where class changed
+        stats:{ str:10, int:10, vit:10, def:5, wis:8, luck:8, end:10 },
+        hp:100, maxHp:100,
+        sanity:60, maxSanity:60,
+        endurance:50, maxEndurance:50,
+        inventory:[{name:"Shiv", type:"weapon", weight:2, value:5, desc:"Poor blade"}],
+        masteredSkills:[], // max 12
+        zone:"Cursed Gaol",
+        dayNight:"Day", turn:0,
+        factions:{ cult:0, resistance:0, order:0 },
+        currentEnemy:null,
+        inCombat:false,
+        checkpoint:"Cursed Gaol"
     };
 
-    // Enemy templates
-    const enemies = {
-        "Cursed Gaol": [
-            { name:"Cult Acolyte", level:1, hp:25, maxHp:25, dmg:6, def:2, xp:30, sanityDrop:2 },
-            { name:"Jail Rat", level:1, hp:15, maxHp:15, dmg:4, def:1, xp:20, sanityDrop:1 }
-        ],
-        "Whisperwood": [
-            { name:"Whisperer", level:12, hp:70, maxHp:70, dmg:14, def:5, xp:80, sanityDrop:5 },
-            { name:"Wood Wraith", level:14, hp:90, maxHp:90, dmg:16, def:6, xp:100, sanityDrop:4 }
-        ],
-        "Sunken Crypt": [
-            { name:"Crypt Walker", level:28, hp:180, maxHp:180, dmg:25, def:12, xp:200, sanityDrop:8 },
-            { name:"Bone Golem", level:32, hp:250, maxHp:250, dmg:30, def:18, xp:280, sanityDrop:6 }
-        ]
-    };
-    const zoneLevels = { "Cursed Gaol":[1,20], "Whisperwood":[10,35], "Sunken Crypt":[25,50] };
-
-    // abilities list (30)
-    const allAbilities = {
-        "Shield Bash":{lvl:1,class:"Knight",cost:10,effect:(p,t)=>t.hp-=15+p.stats.str*1.2,desc:"Deal dmg+stun"},
-        "Iron Will":{lvl:3,class:"Knight",cost:15,effect:(p)=>p.tempDef=1.3,desc:"+30% def"},
-        "Backstab":{lvl:1,class:"Shadow",cost:10,effect:(p,t)=>t.hp-=25+p.stats.luck*1.5,desc:"3x dmg if first"},
-        "Shadowstep":{lvl:3,class:"Shadow",cost:15,effect:(p)=>p.evade=true,desc:"Avoid next attack"},
-        "Mind Bolt":{lvl:1,class:"Seer",cost:8,effect:(p,t)=>t.hp-=12+p.stats.int*1.3,desc:"Magic dmg"},
-        "Sanity Ward":{lvl:3,class:"Seer",cost:10,effect:(p)=>p.sanityWard=true,desc:"No sanity loss 3 turns"}
+    // ========== 6 ZONES with level ranges ==========
+    const zones = {
+        "Cursed Gaol": { min:1, max:20, desc:"Prison and moors" },
+        "Whisperwood": { min:10, max:35, desc="Haunted forest" },
+        "Sunken Crypt": { min:25, max:50, desc="Flooded tombs" },
+        "Cultist Trench": { min:40, max:65, desc="Cult fortress" },
+        "Wyrm's Belly": { min:55, max:80, desc="Living caverns" },
+        "Heart Chamber": { min:75, max:100, desc="Wyrm's core" }
     };
 
-    function updateUI() {
-        document.getElementById("stat-level").innerText = game.level;
-        document.getElementById("stat-xp").innerText = `${game.xp}/${game.xpToNext}`;
-        document.getElementById("stat-class").innerText = game.className;
-        document.getElementById("stat-hp").innerText = `${Math.floor(game.hp)}/${game.maxHp}`;
-        document.getElementById("stat-sanity").innerText = `${Math.floor(game.sanity)}/${game.maxSanity}`;
-        document.getElementById("stat-end").innerText = `${Math.floor(game.endurance)}/${game.maxEndurance}`;
-        document.getElementById("stat-str").innerText = game.stats.str;
-        document.getElementById("stat-int").innerText = game.stats.int;
-        document.getElementById("stat-vit").innerText = game.stats.vit;
-        document.getElementById("stat-def").innerText = game.stats.def;
-        document.getElementById("stat-wis").innerText = game.stats.wis;
-        document.getElementById("stat-luck").innerText = game.stats.luck;
-        document.getElementById("stat-endstat").innerText = game.stats.end;
-        let weightTotal = game.inventory.reduce((s,i)=>s+(i.weight||0),0);
-        document.getElementById("stat-weight").innerHTML = `${weightTotal}/${game.weightLimit}`;
-        document.getElementById("daynight").innerText = game.dayNight;
-        document.getElementById("zone-name").innerText = game.zone;
-        let hpPercent = (game.hp/game.maxHp)*100;
-        document.getElementById("health-fill").style.width = `${hpPercent}%`;
-        let sanPercent = (game.sanity/game.maxSanity)*100;
-        document.getElementById("sanity-fill").style.width = `${sanPercent}%`;
-        renderInventory();
-        renderAbilities();
+    // ========== 30 ABILITIES (simplified effects for playability) ==========
+    const abilityDB = {
+        // Knight (1-10)
+        "Shield Bash":{lvl:1,class:"Knight",cost:10, dmg:12, strScale:1.2, effect:"stun"},
+        "Iron Will":{lvl:3,class:"Knight",cost:15, buff:"def+30%"},
+        "Cleave":{lvl:5,class:"Knight",cost:20, dmg:18, aoe:true},
+        "Taunt":{lvl:8,class:"Knight",cost:5, effect:"taunt"},
+        "Last Stand":{lvl:12,class:"Knight",cost:0, buff:"immortal 3turns"},
+        "Execute":{lvl:16,class:"Knight",cost:25, dmg:40, exec:true},
+        "Victory Rush":{lvl:20,class:"Knight",cost:0, heal:0.15},
+        "Unbreakable":{lvl:25,class:"Knight",cost:40, cleanse:true},
+        "Heroic Slam":{lvl:30,class:"Knight",cost:30, dmg:25, debuff:"def-50%"},
+        "Martyrdom":{lvl:40,class:"Knight",cost:"50%hp", protect:true},
+        // Shadow (11-20)
+        "Backstab":{lvl:1,class:"Shadow",cost:10, dmg:24, critFirst:true},
+        "Shadowstep":{lvl:3,class:"Shadow",cost:15, evade:true},
+        "Poison Blade":{lvl:5,class:"Shadow",cost:8, dmg:10, dot:5},
+        "Pickpocket":{lvl:7,class:"Shadow",cost:5, steal:true},
+        "Evasion":{lvl:10,class:"Shadow",cost:12, dodge:0.5},
+        "Assassinate":{lvl:14,class:"Shadow",cost:20, dmg:42, cond:"poison"},
+        "Smoke Bomb":{lvl:18,class:"Shadow",cost:15, blind:true},
+        "Critical Mastery":{lvl:22,class:"Shadow",passive:true, crit:0.15},
+        "Coup de Grâce":{lvl:28,class:"Shadow",cost:25, instaKill:"<10%"},
+        "Shadow Clone":{lvl:35,class:"Shadow",cost:35, clone:true},
+        // Seer (21-30)
+        "Mind Bolt":{lvl:1,class:"Seer",cost:8, dmg:14, intScale:1.3},
+        "Sanity Ward":{lvl:3,class:"Seer",cost:10, protectSanity:true},
+        "Lesser Heal":{lvl:5,class:"Seer",cost:12, heal:0.2},
+        "Curse of Frailty":{lvl:8,class:"Seer",cost:10, debuff:"def-30%"},
+        "Reveal Truth":{lvl:11,class:"Seer",cost:5, reveal:true},
+        "Restore Sanity":{lvl:15,class:"Seer",cost:20, sanHeal:40},
+        "Dream Eater":{lvl:19,class:"Seer",cost:15, dmg:18, sanSteal:20},
+        "Mass Mend":{lvl:24,class:"Seer",cost:25, aoeHeal:0.15},
+        "Wyrm's Gaze":{lvl:33,class:"Seer",cost:20, sanCost:20, dmg:50},
+        "Eternal Slumber":{lvl:45,class:"Seer",cost:50, sleep:true}
+    };
+
+    // Enemy pool per zone (scaled)
+    function getEnemyForZone(zone, playerLvl){
+        let enemies = {
+            "Cursed Gaol":["Cult Acolyte","Jail Rat"],
+            "Whisperwood":["Whisperer","Wood Wraith"],
+            "Sunken Crypt":["Crypt Walker","Bone Golem"],
+            "Cultist Trench":["Cult Fanatic","Dark Priest"],
+            "Wyrm's Belly":["Wyrm Larva","Cave Horror"],
+            "Heart Chamber":["Wyrm Guard","Heart Guardian"]
+        };
+        let name = enemies[zone][Math.floor(Math.random()*2)];
+        let lvl = Math.min(zones[zone].max, Math.max(zones[zone].min, playerLvl + (Math.random()*6-3)));
+        let hp = 40 + lvl*8;
+        let dmg = 8 + lvl*1.5;
+        let xp = 30 + lvl*4;
+        return { name, level:Math.floor(lvl), hp, maxHp:hp, dmg, xp, sanityDrop:3+Math.floor(lvl/10) };
     }
 
-    function addLog(msg) { let log=document.getElementById("combat-log"); let p=document.createElement("p"); p.innerText=msg; log.appendChild(p); log.scrollTop=log.scrollHeight; }
-    function recalcStats() {
-        game.maxHp = 50 + game.stats.vit*8;
+    // Helper functions
+    function addLog(msg){ let log=document.getElementById("log"); let p=document.createElement("p"); p.innerText=msg; log.appendChild(p); log.scrollTop=log.scrollHeight; }
+    function recalcStats(){
+        game.maxHp = 50 + game.stats.vit*10;
         game.maxSanity = 40 + game.stats.wis*2;
-        game.maxEndurance = 40 + game.stats.end*3;
-        game.weightLimit = 30 + game.stats.str*2;
+        game.maxEndurance = 40 + game.stats.end*4;
         if(game.hp>game.maxHp) game.hp=game.maxHp;
         if(game.sanity>game.maxSanity) game.sanity=game.maxSanity;
         if(game.endurance>game.maxEndurance) game.endurance=game.maxEndurance;
+        let weight = game.inventory.reduce((s,i)=>s+(i.weight||0),0);
+        let maxW = 30 + game.stats.str*3;
+        if(weight>maxW) addLog("Overencumbered! Move slower.");
+        document.getElementById("maxWeight").innerText = maxW;
+        document.getElementById("curWeight").innerText = weight;
     }
-    function addXP(amount) {
-        game.xp+=amount;
-        while(game.xp>=game.xpToNext && game.level<100){
-            game.xp-=game.xpToNext;
+    function addXP(amt){
+        game.xp+=amt;
+        while(game.xp>=game.xpNeeded && game.level<100){
+            game.xp-=game.xpNeeded;
             game.level++;
-            game.xpToNext = Math.floor(100 + game.level*12);
-            addLog(`✨ Level up! Now level ${game.level}. +2 stat points!`);
-            // stat point allocation simplified: auto +1 str +1 vit for demo; player can mod later
-            game.stats.str+=1; game.stats.vit+=1;
-            recalcStats(); game.hp=game.maxHp; game.endurance=game.maxEndurance;
-            updateUI();
+            game.xpNeeded = Math.floor(100 + game.level*10);
+            addLog(`⭐ LEVEL UP! Now level ${game.level}. +2 stat points.`);
+            // manual stat allocation prompt for player
+            let stat = prompt("Add +2 to which stat? (str/int/vit/def/wis/luck/end)","str");
+            if(game.stats[stat]!==undefined) game.stats[stat]+=2;
+            else game.stats.str+=1;
+            recalcStats();
+            game.hp=game.maxHp; game.endurance=game.maxEndurance;
         }
         updateUI();
     }
     function takeDamage(amt){
         let reduced = Math.max(1, amt - game.stats.def);
         game.hp -= reduced;
-        if(game.hp<=0){ addLog("You died! Respawning at last checkpoint..."); game.hp=game.maxHp; game.sanity=game.maxSanity; game.zone=game.lastCheckpoint; game.inCombat=false; game.currentEnemy=null; }
+        if(game.hp<=0){
+            addLog("💀 You died! Respawn at last checkpoint.");
+            game.hp=game.maxHp; game.sanity=game.maxSanity; game.zone=game.checkpoint; game.inCombat=false; game.currentEnemy=null;
+        }
         updateUI();
     }
-    function attackEnemy(){
-        if(!game.inCombat || !game.currentEnemy) { addLog("No enemy to attack."); return; }
-        let dmg = 8 + game.stats.str*1.5;
+    function sanityLoss(amt){
+        game.sanity -= amt;
+        if(game.sanity<=0){ addLog("Your mind shatters. Game Over."); location.reload(); }
+        if(game.sanity<20) addLog("⚠️ Hallucinations... enemies flicker.");
+        updateUI();
+    }
+    function attack(){
+        if(!game.inCombat||!game.currentEnemy) return addLog("No enemy.");
+        let dmg = 10 + game.stats.str*1.2;
         game.currentEnemy.hp -= dmg;
         addLog(`You attack for ${Math.floor(dmg)} damage.`);
-        if(game.currentEnemy.hp<=0){
-            addLog(`Defeated ${game.currentEnemy.name}! +${game.currentEnemy.xp} XP`);
-            addXP(game.currentEnemy.xp);
-            game.inCombat=false;
-            game.currentEnemy=null;
-            updateUI();
-            return;
-        }
-        let enemyDmg = game.currentEnemy.dmg;
-        takeDamage(enemyDmg);
-        addLog(`${game.currentEnemy.name} hits you for ${enemyDmg} damage.`);
+        if(game.currentEnemy.hp<=0){ defeatEnemy(); return; }
+        let eDmg = game.currentEnemy.dmg;
+        takeDamage(eDmg);
+        addLog(`${game.currentEnemy.name} hits for ${Math.floor(eDmg)}.`);
         updateUI();
     }
-    function explore() {
-        if(game.inCombat) { addLog("Finish current fight first."); return; }
-        let zoneEnemies = enemies[game.zone];
-        if(!zoneEnemies){ addLog("No foes here."); return; }
-        let idx = Math.floor(Math.random()*zoneEnemies.length);
-        let template = zoneEnemies[idx];
-        let lvlRange = zoneLevels[game.zone];
-        let enemyLvl = Math.min(lvlRange[1], Math.max(lvlRange[0], game.level + (Math.random()*6-3)));
-        let enemy = {
-            name:template.name, level:enemyLvl, hp: template.hp + enemyLvl*3,
-            maxHp: template.hp + enemyLvl*3, dmg: template.dmg + Math.floor(enemyLvl/2),
-            def: template.def, xp: template.xp + enemyLvl*5, sanityDrop: template.sanityDrop
-        };
+    function defeatEnemy(){
+        addLog(`Victory! +${game.currentEnemy.xp} XP, -${game.currentEnemy.sanityDrop} sanity.`);
+        addXP(game.currentEnemy.xp);
+        sanityLoss(game.currentEnemy.sanityDrop);
+        game.inCombat=false;
+        game.currentEnemy=null;
+        updateUI();
+    }
+    function explore(){
+        if(game.inCombat) return addLog("Finish combat first.");
+        let enemy = getEnemyForZone(game.zone, game.level);
         game.currentEnemy = enemy;
-        game.inCombat = true;
+        game.inCombat=true;
         addLog(`⚔️ ${enemy.name} (lvl ${enemy.level}) attacks!`);
         updateUI();
     }
     function flee(){
-        if(!game.inCombat){addLog("Nothing to flee from."); return;}
-        let luckBonus = game.stats.luck/20;
-        if(Math.random()<0.4+luckBonus){
-            addLog("You escaped!");
+        if(!game.inCombat) return;
+        let chance = 0.4 + game.stats.luck/30;
+        if(Math.random()<chance){
+            addLog("Escaped!");
             game.inCombat=false;
             game.currentEnemy=null;
-        } else { addLog("Failed to flee!"); let dmg = 5; takeDamage(dmg); addLog(`Enemy strikes as you flee: ${dmg} dmg`); }
-        updateUI();
-    }
-    function travel(){
-        let zones = Object.keys(zoneLevels);
-        let newZone = zones[(zones.indexOf(game.zone)+1)%zones.length];
-        game.zone = newZone;
-        game.lastCheckpoint = newZone;
-        game.inCombat=false;
-        game.currentEnemy=null;
-        addLog(`You travel to ${newZone}.`);
+        } else {
+            addLog("Failed to flee!");
+            takeDamage(game.currentEnemy.dmg);
+        }
         updateUI();
     }
     function rest(){
         game.hp = game.maxHp;
         game.endurance = game.maxEndurance;
-        game.sanity = Math.min(game.maxSanity, game.sanity+20);
-        addLog("You rest at an inn. Health and endurance restored. +20 sanity.");
+        game.sanity = Math.min(game.maxSanity, game.sanity+25);
+        addLog("You rest. HP, Endurance restored, +25 sanity.");
         updateUI();
     }
-    function renderInventory(){
-        let div = document.getElementById("inventory-list");
-        div.innerHTML = game.inventory.map(i=>`${i.name} (${i.weight}wt)`).join(", ") || "Empty";
-    }
-    function renderAbilities(){
-        let div = document.getElementById("known-abilities");
-        let known = game.abilitiesUnlocked;
-        div.innerHTML = known.map(a=>`🔹 ${a}`).join("<br>") || "None yet";
-    }
-    function saveGame(){
-        localStorage.setItem("wyrmRPG", JSON.stringify(game));
-        addLog("Game saved.");
-    }
-    function loadGame(){
-        let saved = localStorage.getItem("wyrmRPG");
-        if(saved){ game = JSON.parse(saved); recalcStats(); addLog("Game loaded."); updateUI(); }
-        else addLog("No save found.");
+    function travel(){
+        let zoneList = Object.keys(zones);
+        let idx = zoneList.indexOf(game.zone);
+        let next = (idx+1)%zoneList.length;
+        game.zone = zoneList[next];
+        game.checkpoint = game.zone;
+        game.inCombat=false;
+        game.currentEnemy=null;
+        addLog(`Travel to ${game.zone} (${zones[game.zone].desc}).`);
+        updateUI();
     }
     function changeClass(){
         let lvl = game.level;
-        if(lvl>=25 && lvl<50 && game.className!=="Shadow") { game.className="Shadow"; addLog("Class changed to Shadow!"); }
-        else if(lvl>=50 && lvl<75 && game.className!=="Seer") { game.className="Seer"; addLog("Class changed to Seer!"); }
-        else if(lvl>=75 && game.className!=="Knight") { game.className="Knight"; addLog("Class changed to Knight!"); }
-        else addLog("Cannot change class at this level (need 25,50,75).");
+        if(lvl>=25 && lvl<50 && game.className!=="Shadow"){ game.className="Shadow"; addLog("Become Shadow!"); }
+        else if(lvl>=50 && lvl<75 && game.className!=="Seer"){ game.className="Seer"; addLog("Become Seer!"); }
+        else if(lvl>=75 && game.className!=="Knight"){ game.className="Knight"; addLog("Return to Knight!"); }
+        else addLog("Cannot change class now (needs 25/50/75).");
         updateUI();
     }
     function showAbilities(){
-        let div = document.getElementById("ability-list");
-        let list = Object.keys(allAbilities).filter(a=>allAbilities[a].class===game.className && game.level>=allAbilities[a].lvl);
-        div.innerHTML = list.map(a=>`<button class="skill-use" data-abil="${a}">${a}</button>`).join("");
-        div.style.display="block";
-        document.querySelectorAll(".skill-use").forEach(btn=>btn.addEventListener("click",(e)=>{
+        let panel = document.getElementById("abilityPanel");
+        let avail = Object.keys(abilityDB).filter(a=> abilityDB[a].class===game.className && game.level>=abilityDB[a].lvl && !game.masteredSkills.includes(a));
+        if(avail.length===0){ addLog("No new abilities to learn."); return; }
+        panel.innerHTML = avail.map(a=>`<button class="learnBtn" data-abil="${a}">${a} (lvl${abilityDB[a].lvl})</button>`).join("");
+        panel.style.display="grid";
+        document.querySelectorAll(".learnBtn").forEach(btn=>btn.addEventListener("click",(e)=>{
             let ab = e.target.dataset.abil;
-            if(game.inCombat && game.currentEnemy){
-                let skill = allAbilities[ab];
-                if(game.endurance>=skill.cost){
-                    game.endurance-=skill.cost;
-                    skill.effect(game, game.currentEnemy);
-                    addLog(`Used ${ab}!`);
-                    if(game.currentEnemy.hp<=0){
-                        addLog(`Defeated! +${game.currentEnemy.xp} XP`);
-                        addXP(game.currentEnemy.xp);
-                        game.inCombat=false;
-                        game.currentEnemy=null;
-                    } else {
-                        let enemyDmg = game.currentEnemy.dmg;
-                        takeDamage(enemyDmg);
-                        addLog(`${game.currentEnemy.name} retaliates for ${enemyDmg} damage.`);
-                    }
-                    updateUI();
-                } else addLog("Not enough endurance.");
-            } else addLog("No combat.");
-            div.style.display="none";
+            if(game.masteredSkills.length>=12){ addLog("Cannot master more than 12 skills!"); return; }
+            game.masteredSkills.push(ab);
+            addLog(`Learned ${ab}.`);
+            panel.style.display="none";
+            updateUI();
         }));
     }
-    // Initialize events
+    function craft(){
+        if(game.inventory.some(i=>i.name==="Herb") && game.inventory.some(i=>i.name==="Water")){
+            game.inventory = game.inventory.filter(i=>i.name!=="Herb" && i.name!=="Water");
+            game.inventory.push({name:"Weak Healing Potion", type:"potion", weight:1, value:10, effect:"heal20"});
+            addLog("Crafted Weak Healing Potion.");
+        } else addLog("Need Herb + Water to craft.");
+        updateUI();
+    }
+    function useItem(){
+        let potion = game.inventory.find(i=>i.name==="Weak Healing Potion");
+        if(potion){
+            game.hp = Math.min(game.maxHp, game.hp+20);
+            game.inventory = game.inventory.filter(i=>i!==potion);
+            addLog("Used potion, healed 20 HP.");
+        } else addLog("No usable items.");
+        updateUI();
+    }
+    function saveGame(){ localStorage.setItem("wyrmSave",JSON.stringify(game)); addLog("Game saved."); }
+    function loadGame(){ let s=localStorage.getItem("wyrmSave"); if(s){ game=JSON.parse(s); recalcStats(); addLog("Loaded."); } updateUI(); }
+
+    function updateUI(){
+        document.getElementById("lvl").innerText = game.level;
+        document.getElementById("xp").innerText = `${game.xp}/${game.xpNeeded}`;
+        document.getElementById("className").innerText = game.className;
+        document.getElementById("hpVal").innerText = `${Math.floor(game.hp)}/${game.maxHp}`;
+        document.getElementById("sanVal").innerText = `${Math.floor(game.sanity)}/${game.maxSanity}`;
+        document.getElementById("endVal").innerText = `${Math.floor(game.endurance)}/${game.maxEndurance}`;
+        document.getElementById("str").innerText = game.stats.str;
+        document.getElementById("int").innerText = game.stats.int;
+        document.getElementById("vit").innerText = game.stats.vit;
+        document.getElementById("def").innerText = game.stats.def;
+        document.getElementById("wis").innerText = game.stats.wis;
+        document.getElementById("luck").innerText = game.stats.luck;
+        document.getElementById("endStat").innerText = game.stats.end;
+        document.getElementById("time").innerText = game.dayNight;
+        document.getElementById("zone").innerText = game.zone;
+        document.getElementById("cultRep").innerText = game.factions.cult;
+        document.getElementById("resRep").innerText = game.factions.resistance;
+        document.getElementById("ordRep").innerText = game.factions.order;
+        document.getElementById("skillCount").innerText = game.masteredSkills.length;
+        document.getElementById("hpFill").style.width = `${(game.hp/game.maxHp)*100}%`;
+        document.getElementById("sanFill").style.width = `${(game.sanity/game.maxSanity)*100}%`;
+        document.getElementById("endFill").style.width = `${(game.endurance/game.maxEndurance)*100}%`;
+        let invHtml = game.inventory.map(i=>`${i.name} (${i.weight}wt)`).join(", ");
+        document.getElementById("invList").innerHTML = invHtml || "Empty";
+        let skillHtml = game.masteredSkills.map(s=>`• ${s}`).join("<br>");
+        document.getElementById("skillList").innerHTML = skillHtml || "None";
+        let zoneHtml = Object.keys(zones).map(z=>`${z} (${zones[z].min}-${zones[z].max})`).join("<br>");
+        document.getElementById("zoneList").innerHTML = zoneHtml;
+        let weightTotal = game.inventory.reduce((s,i)=>s+(i.weight||0),0);
+        let maxW = 30 + game.stats.str*3;
+        document.getElementById("weight").innerHTML = `${weightTotal}/${maxW}`;
+        if(game.currentEnemy){
+            document.getElementById("enemyDiv").innerHTML = `<div class="enemy-card"><b>${game.currentEnemy.name}</b> (lvl${game.currentEnemy.level})<br>❤️ ${Math.floor(game.currentEnemy.hp)}/${game.currentEnemy.maxHp}<br>⚔️ Dmg:${Math.floor(game.currentEnemy.dmg)}<br><button id="exploreBtn">Explore</button></div>`;
+            document.getElementById("exploreBtn")?.addEventListener("click",explore);
+        } else {
+            document.getElementById("enemyDiv").innerHTML = `<div class="enemy-card">No enemy<br><button id="exploreBtn">Explore</button></div>`;
+            document.getElementById("exploreBtn")?.addEventListener("click",explore);
+        }
+    }
+
+    // Event binding
     window.onload=()=>{
         recalcStats(); updateUI();
-        document.getElementById("attack-btn").onclick=attackEnemy;
-        document.getElementById("explore-btn").onclick=explore;
-        document.getElementById("flee-btn").onclick=flee;
-        document.getElementById("travel-btn").onclick=travel;
-        document.getElementById("rest-btn").onclick=rest;
-        document.getElementById("save-btn").onclick=saveGame;
-        document.getElementById("class-change-btn").onclick=changeClass;
-        document.getElementById("ability-btn").onclick=showAbilities;
-        document.getElementById("craft-btn").onclick=()=>addLog("Crafting simple: Herb+Water -> Weak Potion (need materials)");
-        document.getElementById("item-btn").onclick=()=>addLog("Use item: not fully implemented, but you could drink potion.");
-        // day/night cycle
-        setInterval(()=>{
-            game.turnCounter++;
-            if(game.turnCounter%15===0){
-                game.dayNight = game.dayNight==="Day"?"Night":"Day";
-                addLog(`🌙 The ${game.dayNight} falls...`);
-                updateUI();
-            }
-        }, 30000);
+        document.getElementById("attackBtn").onclick=attack;
+        document.getElementById("exploreBtn").onclick=explore;
+        document.getElementById("fleeBtn").onclick=flee;
+        document.getElementById("restBtn").onclick=rest;
+        document.getElementById("travelBtn").onclick=travel;
+        document.getElementById("classChangeBtn").onclick=changeClass;
+        document.getElementById("abilitiesBtn").onclick=showAbilities;
+        document.getElementById("craftBtn").onclick=craft;
+        document.getElementById("itemBtn").onclick=useItem;
+        document.getElementById("saveBtn").onclick=saveGame;
+        setInterval(()=>{ game.turn++; if(game.turn%20===0){ game.dayNight=game.dayNight==="Day"?"Night":"Day"; addLog(`🌙 ${game.dayNight} falls.`); updateUI(); }}, 25000);
         loadGame();
     };
 </script>
